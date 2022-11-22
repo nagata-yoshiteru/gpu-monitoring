@@ -11,12 +11,12 @@
 
 - Create Directories
 	```
-		mkdir -p prometheus/data 
-		mkdir -p prometheus/textfiles
+	mkdir -p prometheus/data 
+	mkdir -p prometheus/textfiles
 	```
 - Start
 	```
-		docker compose up -d
+	docker compose up -d
 	```
 
 
