@@ -1,0 +1,54 @@
+version: '2.3'
+
+services:
+    prometheus:
+        image: prom/prometheus
+        ports:
+            - 9090:9090
+        networks:
+            - default
+        volumes:
+            - ./prometheus.yml:/etc/prometheus/prometheus.yml
+            - ./prometheus/data:/prometheus
+              #restart: always
+
+    node_exporter:
+        image: quay.io/prometheus/node-exporter:latest
+        command: --collector.textfile.directory=/run/prometheus
+        pid: "host"
+        volumes:
+            - ./prometheus/data:/prometheus
+            - ./prometheus/textfiles:/run/prometheus:ro
+        networks:
+            - default
+        restart: always
+
+    dcgm_exporter:
+        image: nvcr.io/nvidia/k8s/dcgm-exporter:2.3.1-2.6.0-ubuntu20.04
+        runtime: nvidia
+        ports:
+            - 9400:9400
+        runtime: nvidia
+        volumes:
+            - ./prometheus/textfiles:/run/prometheus
+        networks:
+            - default
+        restart: always
+
+
+volumes:
+    prometheus_textfiles:
+        driver_opts:
+            type: tmpfs
+            device: tmpfs
+    prometheus_data:
+        driver: local
+    grafana_data:
+        driver: local
+
+networks:
+    default:
+        driver: bridge
+
+
+
