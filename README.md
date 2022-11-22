@@ -13,6 +13,7 @@
     ```
 	mkdir -p prometheus/data 
 	mkdir -p prometheus/textfiles
+	chmod -R 777 prometheus
     ```
 - Start
     ```
