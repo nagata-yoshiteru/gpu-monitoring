@@ -35,6 +35,15 @@ services:
             - default
         restart: always
 
+    grafana:
+        image: grafana/grafana
+        volumes:
+            - grafana_data:/var/lib/grafana
+        ports:
+            - 3000:3000
+        networks:
+            - default
+        restart: always
 
 volumes:
     prometheus_textfiles:
